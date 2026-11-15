@@ -33,3 +33,11 @@ yarn-error.log*
 
 # mine
 /meus_prompts
+
+# Universal
+*.log
+.env*
+.DS_Store
+Thumbs.db
+*.tmp
+*.swp

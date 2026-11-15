@@ -1,0 +1,71 @@
+<main class="showcase">
+  <h1>Demonstração do tema</h1>
+
+  <h2>Botões</h2>
+  <section>
+    <button mat-flat-button>Salvar</button>
+    <button mat-stroked-button>Cancelar</button>
+    <button mat-button>Detalhes</button>
+    <button mat-flat-button disabled>Indisponível</button>
+  </section>
+
+  <h2>Formulário</h2>
+  <section>
+    <mat-form-field appearance="outline">
+      <mat-label>Nome</mat-label>
+      <input matInput [formControl]="nameControl" />
+      @if (nameControl.hasError('required')) {
+        <mat-error>Campo obrigatório.</mat-error>
+      }
+    </mat-form-field>
+  </section>
+
+  <h2>Card</h2>
+  <section>
+    <mat-card appearance="outlined">
+      <mat-card-header>
+        <mat-card-title>Card de exemplo</mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+        <p>O fundo do card usa a cor de superfície do tema.</p>
+      </mat-card-content>
+      <mat-card-actions>
+        <button mat-button>Ação</button>
+      </mat-card-actions>
+    </mat-card>
+  </section>
+
+  <h2>Diálogo</h2>
+  <section>
+    <button mat-stroked-button (click)="openDialog()">Abrir diálogo</button>
+  </section>
+
+  <h2>Progresso</h2>
+  <section class="progress">
+    <mat-progress-bar mode="determinate" [value]="progressValue()" />
+    <p>{{ progressValue() }}% concluído</p>
+    <mat-progress-bar mode="indeterminate" />
+  </section>
+
+  <h2>Mensagens</h2>
+  <section>
+    <button mat-stroked-button (click)="showFeedback('error')">Mostrar erro</button>
+    <button mat-stroked-button (click)="showFeedback('success')">Mostrar sucesso</button>
+    <button mat-stroked-button (click)="showFeedback('info')">Mostrar informação</button>
+    <button mat-stroked-button (click)="showFeedback('warning')">Mostrar alerta</button>
+  </section>
+
+  <h2>Componente próprio com tokens</h2>
+  <section>
+    <app-token-swatch label="Este bloco usa apenas tokens centrais." />
+    <a class="link" href="#">Link de exemplo</a>
+  </section>
+
+  <h2>Tipografia</h2>
+  <section class="typography">
+    <p class="headline-small">Título</p>
+    <p class="title-medium">Subtítulo</p>
+    <p class="body-medium">Texto de corpo</p>
+    <p class="label-medium">Rótulo</p>
+  </section>
+</main>
