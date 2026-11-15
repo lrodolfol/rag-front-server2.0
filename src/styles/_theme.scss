@@ -1,0 +1,124 @@
+@use '@angular/material' as mat;
+
+html {
+  color-scheme: light;
+
+  @include mat.theme(
+    (
+      color: (
+        theme-type: light,
+        primary: mat.$green-palette,
+      ),
+      typography: (
+        plain-family: var(--app-font-family),
+        brand-family: var(--app-font-family),
+      ),
+      density: 0,
+    )
+  );
+
+  @include mat.theme-overrides(
+    (
+      primary: var(--app-color-primary),
+      on-primary: var(--app-color-on-primary),
+      primary-container: var(--app-color-accent),
+      on-primary-container: var(--app-color-on-surface),
+      surface: var(--app-color-surface),
+      background: var(--app-color-surface),
+      surface-container-lowest: var(--app-color-surface),
+      surface-container-low: var(--app-color-surface),
+      surface-container: var(--app-color-surface),
+      surface-container-high: var(--app-color-surface),
+      surface-container-highest: var(--app-color-accent),
+      on-surface: var(--app-color-on-surface),
+      on-background: var(--app-color-on-surface),
+      on-surface-variant: var(--app-color-on-surface-variant),
+      outline: var(--app-color-on-surface-variant),
+      error: var(--app-color-error-text),
+      on-error: var(--app-color-surface),
+      error-container: var(--app-color-error-bg),
+      on-error-container: var(--app-color-error-text),
+      secondary: var(--app-color-primary),
+      secondary-container: var(--app-color-accent),
+      on-secondary-container: var(--app-color-on-surface),
+      tertiary: var(--app-color-primary),
+    )
+  );
+}
+
+html {
+  // Rótulos de botões preenchidos: 19px bold (texto grande, FR-009). Botões de texto,
+  // contornados e tonais usam on-surface, pois a primária não atinge 4,5:1 em tamanho normal.
+  @include mat.button-overrides(
+    (
+      filled-label-text-size: 1.1875rem,
+      filled-label-text-weight: 700,
+      protected-label-text-size: 1.1875rem,
+      protected-label-text-weight: 700,
+      text-label-text-color: var(--app-color-on-surface),
+      outlined-label-text-color: var(--app-color-on-surface),
+      outlined-outline-color: var(--app-color-on-surface-variant),
+      tonal-label-text-color: var(--app-color-on-surface),
+    )
+  );
+
+  // Erro sempre em error-text (FR-006a); foco com contorno na primária e rótulo em on-surface.
+  @include mat.form-field-overrides(
+    (
+      outlined-error-outline-color: var(--app-color-error-text),
+      outlined-error-focus-outline-color: var(--app-color-error-text),
+      outlined-error-hover-outline-color: var(--app-color-error-text),
+      outlined-error-label-text-color: var(--app-color-error-text),
+      outlined-error-focus-label-text-color: var(--app-color-error-text),
+      outlined-error-hover-label-text-color: var(--app-color-error-text),
+      error-text-color: var(--app-color-error-text),
+      outlined-outline-color: var(--app-color-on-surface-variant),
+      outlined-focus-outline-color: var(--app-color-primary),
+      outlined-label-text-color: var(--app-color-on-surface-variant),
+      outlined-focus-label-text-color: var(--app-color-on-surface),
+      outlined-hover-label-text-color: var(--app-color-on-surface),
+    )
+  );
+
+  // Contraste indicador × trilho de 2,88:1 é desvio conhecido (research R-11).
+  @include mat.progress-bar-overrides(
+    (
+      active-indicator-color: var(--app-color-primary),
+      track-color: var(--app-color-accent),
+    )
+  );
+
+  @include mat.dialog-overrides(
+    (
+      container-color: var(--app-color-surface),
+    )
+  );
+
+  @include mat.card-overrides(
+    (
+      outlined-container-color: var(--app-color-surface),
+      elevated-container-color: var(--app-color-surface),
+    )
+  );
+}
+
+// Indicadores de foco fortes para navegação por teclado (FR-014).
+@include mat.strong-focus-indicators(
+  (
+    border-color: var(--app-color-primary),
+    border-width: 3px,
+  )
+);
+
+// Variantes de snackbar por tipo de feedback (FR-005, research R-05).
+@each $type in (error, success, info, warning) {
+  .app-snackbar--#{$type} {
+    @include mat.snack-bar-overrides(
+      (
+        container-color: var(--app-color-#{$type}-bg),
+        supporting-text-color: var(--app-color-#{$type}-text),
+        button-color: var(--app-color-#{$type}-text),
+      )
+    );
+  }
+}

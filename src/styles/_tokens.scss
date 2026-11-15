@@ -1,0 +1,22 @@
+// Única fonte de cores da aplicação. Valores hexadecimais são proibidos fora deste arquivo.
+:root {
+  // Marca
+  --app-color-primary: #00a35c;
+  --app-color-on-primary: #ffffff;
+  --app-color-surface: #fcfaf1;
+  --app-color-accent: #e8f3ea;
+
+  // Neutros de texto
+  --app-color-on-surface: #1c1b17;
+  --app-color-on-surface-variant: #6b6b60;
+
+  // Status
+  --app-color-error-bg: #fee2e2;
+  --app-color-error-text: #991b1b;
+  --app-color-success-bg: #dcfce7;
+  --app-color-success-text: #166534;
+  --app-color-info-bg: #dbeafe;
+  --app-color-info-text: #1d4ed8;
+  --app-color-warning-bg: #fef3c7;
+  --app-color-warning-text: #92400e;
+}
