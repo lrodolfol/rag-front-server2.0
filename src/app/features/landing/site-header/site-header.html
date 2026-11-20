@@ -1,0 +1,16 @@
+<header>
+  <mat-toolbar class="toolbar">
+    <div class="container">
+      <a class="brand" [routerLink]="homeLink" (click)="scrollToTop()">
+        <mat-icon svgIcon="storefront" aria-hidden="true" />
+        AchaLocal
+      </a>
+      <span class="spacer"></span>
+      <a mat-button [routerLink]="chatbotLink">
+        <mat-icon svgIcon="chat" aria-hidden="true" />
+        testar chatbot
+      </a>
+    </div>
+  </mat-toolbar>
+  <mat-divider />
+</header>

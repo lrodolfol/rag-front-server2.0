@@ -1,0 +1,31 @@
+<section class="hero" aria-labelledby="hero-title">
+  <div class="container">
+    <div class="content">
+      <h1 id="hero-title">Seu negócio encontrado no estilo WhatsApp.</h1>
+      <p>
+        Cadastre uma vez. Quando alguém perguntar “estou com fome” ou “preciso reformar”, nosso
+        chatbot recomenda você — com endereço, preço e contato.
+      </p>
+      <div class="actions">
+        <a mat-flat-button [routerLink]="registerBusinessLink">
+          <mat-icon svgIcon="add_business" aria-hidden="true" />
+          cadastrar meu negócio
+        </a>
+        <a mat-stroked-button [routerLink]="chatbotLink">
+          <mat-icon svgIcon="chat" aria-hidden="true" />
+          testar o chat online
+        </a>
+      </div>
+    </div>
+    <img
+      class="illustration"
+      ngSrc="hero"
+      ngSrcset="960w, 1440w"
+      sizes="(min-width: 600px) 50vw, 100vw"
+      width="1440"
+      height="810"
+      priority
+      alt="Ilustração de negócios locais — padaria, barbearia, loja de ferramentas e professor de idiomas — com balões de conversa e marcadores de localização"
+    />
+  </div>
+</section>
