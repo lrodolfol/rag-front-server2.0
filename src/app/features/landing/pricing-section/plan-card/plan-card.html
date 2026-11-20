@@ -1,0 +1,13 @@
+<mat-card appearance="outlined" class="card">
+  <h3>{{ plan().name }}</h3>
+  <p class="price">{{ price() | currency: 'BRL' : 'symbol' : '1.2-2' }}/mês</p>
+  <ul>
+    @for (benefit of plan().benefits; track benefit) {
+      <li>
+        <mat-icon svgIcon="check" aria-hidden="true" />
+        {{ benefit }}
+      </li>
+    }
+  </ul>
+  <p class="note">{{ plan().cancellationNote }}</p>
+</mat-card>

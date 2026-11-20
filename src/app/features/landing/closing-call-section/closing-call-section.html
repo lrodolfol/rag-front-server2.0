@@ -1,0 +1,20 @@
+<section class="closing-call" aria-labelledby="closing-call-title">
+  <div class="container">
+    <div>
+      <h2 id="closing-call-title">Pronto para alcançar maiores resultados?</h2>
+      <p class="description">
+        Não fazemos pedidos ou integração com empresas: disponibilizamos informações e ajudamos o
+        cliente a encontrar o seu serviço.
+      </p>
+      <ul class="benefits">
+        @for (benefit of benefits; track benefit.label) {
+          <li>
+            <mat-icon [svgIcon]="benefit.icon" aria-hidden="true" />
+            {{ benefit.label }}
+          </li>
+        }
+      </ul>
+    </div>
+    <app-contact-card />
+  </div>
+</section>

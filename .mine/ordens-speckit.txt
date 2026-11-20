@@ -1,0 +1,8 @@
+contitution -> md
+
+specify
+	clarification
+plan
+tasks
+	analyze
+implement

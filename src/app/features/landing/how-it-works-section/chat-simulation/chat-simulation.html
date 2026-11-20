@@ -1,0 +1,18 @@
+<div class="panel">
+  <div class="panel-header">
+    <mat-icon svgIcon="storefront" aria-hidden="true" />
+    AchaLocal · chatbot
+  </div>
+  <div class="panel-body" role="list" aria-label="Exemplo de conversa">
+    @for (message of messages(); track $index) {
+      <div
+        role="listitem"
+        class="message"
+        [class.message--user]="message.author === 'user'"
+        [class.message--assistant]="message.author === 'assistant'"
+      >
+        {{ message.text }}
+      </div>
+    }
+  </div>
+</div>

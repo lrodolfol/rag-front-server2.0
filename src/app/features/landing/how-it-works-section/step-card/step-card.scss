@@ -1,0 +1,26 @@
+:host {
+  display: block;
+  height: 100%;
+}
+
+.card {
+  height: 100%;
+  padding: 24px;
+}
+
+mat-icon {
+  width: 32px;
+  height: 32px;
+  color: var(--app-color-primary);
+}
+
+h3 {
+  margin: 12px 0 8px;
+  font-size: 1.125rem;
+}
+
+p {
+  margin: 0;
+  line-height: 1.5;
+  color: var(--app-color-on-surface-variant);
+}

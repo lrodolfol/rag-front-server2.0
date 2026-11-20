@@ -1,0 +1,25 @@
+:host {
+  display: block;
+}
+
+.card {
+  padding: 24px;
+  box-shadow: var(--mat-sys-level3);
+}
+
+h3 {
+  margin: 0 0 8px;
+  font-size: 1.25rem;
+}
+
+p {
+  margin: 0 0 12px;
+  color: var(--app-color-on-surface-variant);
+}
+
+.email {
+  font-weight: 700;
+  color: var(--app-color-on-surface);
+  word-break: break-all;
+  user-select: all;
+}

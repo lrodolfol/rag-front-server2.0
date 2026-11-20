@@ -1,0 +1,9 @@
+<mat-card appearance="raised" class="card">
+  <h3>Fale com a gente</h3>
+  <p>Atendimento somente por e-mail.</p>
+  <p class="email">{{ contactEmail }}</p>
+  <a mat-flat-button [href]="mailtoLink">
+    <mat-icon svgIcon="mail" aria-hidden="true" />
+    Enviar e-mail
+  </a>
+</mat-card>

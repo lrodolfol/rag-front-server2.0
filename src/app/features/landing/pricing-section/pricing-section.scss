@@ -1,0 +1,16 @@
+:host {
+  display: block;
+}
+
+.pricing {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 24px;
+  padding: 24px 16px 56px;
+}
+
+h2 {
+  margin: 0;
+  font-size: 2rem;
+}

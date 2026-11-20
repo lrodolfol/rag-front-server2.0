@@ -1,0 +1,29 @@
+<section class="how-it-works" aria-labelledby="how-it-works-title">
+  <div class="container">
+    <header class="intro">
+      <h2 id="how-it-works-title">Como funciona</h2>
+      <p>Dois lados de uma mesma plataforma: quem oferece e quem precisa.</p>
+    </header>
+
+    <div class="steps">
+      @for (step of steps; track step.order) {
+        <app-step-card [step]="step" />
+      }
+    </div>
+
+    <div class="natural-language">
+      <div>
+        <h3>Funciona com linguagem natural.</h3>
+        <p>
+          Os usuários não precisam saber o nome certo da categoria. O serviço entende o contexto e
+          encontra o negócio certo na sua base.
+        </p>
+        <a mat-stroked-button [routerLink]="chatbotLink">
+          testar agora
+          <mat-icon iconPositionEnd svgIcon="arrow_forward" aria-hidden="true" />
+        </a>
+      </div>
+      <app-chat-simulation [messages]="chatMessages" />
+    </div>
+  </div>
+</section>
