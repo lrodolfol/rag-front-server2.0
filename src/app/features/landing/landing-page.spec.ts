@@ -36,6 +36,28 @@ describe('LandingPage', () => {
     ]);
   });
 
+  it('should show "registrar" right after "testar chatbot" in the header, linking to /register', () => {
+    const links = Array.from(
+      element.querySelectorAll<HTMLAnchorElement>('app-site-header a[mat-button]'),
+    );
+    expect(links[1]?.textContent?.trim()).toBe('registrar');
+    expect(links[1]?.getAttribute('href')).toBe('/register');
+    expect(links[1]?.querySelector('mat-icon')?.getAttribute('data-mat-icon-name')).toBe('person_add');
+  });
+
+  it('should show exactly "testar chatbot", "registrar" and "login" with "login" linking to /login', () => {
+    const links = Array.from(
+      element.querySelectorAll<HTMLAnchorElement>('app-site-header a[mat-button]'),
+    );
+    expect(links.map((link) => link.textContent?.trim())).toEqual([
+      'testar chatbot',
+      'registrar',
+      'login',
+    ]);
+    expect(links[2]?.getAttribute('href')).toBe('/login');
+    expect(links[2]?.querySelector('mat-icon')?.getAttribute('data-mat-icon-name')).toBe('login');
+  });
+
   it('should have exactly one h1 on the page', () => {
     expect(element.querySelectorAll('h1').length).toBe(1);
   });

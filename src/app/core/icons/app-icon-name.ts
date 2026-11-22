@@ -13,6 +13,10 @@ export const APP_ICON_NAMES = [
   'check',
   'home',
   'send',
+  'person_add',
+  'visibility',
+  'visibility_off',
+  'login',
 ] as const;
 
 export type AppIconName = (typeof APP_ICON_NAMES)[number];

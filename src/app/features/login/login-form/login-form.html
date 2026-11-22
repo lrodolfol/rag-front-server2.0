@@ -1,0 +1,59 @@
+<form
+  class="form"
+  novalidate
+  [formGroup]="form"
+  (ngSubmit)="submit()"
+  (input)="store.dismissError()"
+>
+  <div class="heading">
+    <mat-icon class="heading-icon" svgIcon="login" aria-hidden="true" />
+    <h1 class="title">{{ headingText }}</h1>
+    <p class="subtitle">{{ subheadingText }}</p>
+  </div>
+
+  <mat-form-field class="field" appearance="outline">
+    <mat-label>{{ emailLabel }}</mat-label>
+    <input
+      matInput
+      type="email"
+      formControlName="email"
+      autocomplete="email"
+      [maxlength]="emailMaxLength"
+    />
+    <mat-error>{{ errorMessage('email') }}</mat-error>
+  </mat-form-field>
+
+  <mat-form-field class="field" appearance="outline">
+    <mat-label>{{ passwordLabel }}</mat-label>
+    <input
+      matInput
+      formControlName="password"
+      autocomplete="current-password"
+      [type]="passwordInputType()"
+      [maxlength]="passwordMaxLength"
+    />
+    <button
+      mat-icon-button
+      matSuffix
+      type="button"
+      [attr.aria-label]="passwordToggleLabel()"
+      [attr.aria-pressed]="passwordVisible()"
+      [disabled]="isLocked()"
+      (click)="togglePasswordVisibility()"
+    >
+      <mat-icon [svgIcon]="passwordToggleIcon()" aria-hidden="true" />
+    </button>
+    <mat-error>{{ errorMessage('password') }}</mat-error>
+  </mat-form-field>
+
+  @if (store.errorMessage(); as message) {
+    <p class="notice notice--error" role="alert">{{ message }}</p>
+  }
+
+  <div class="actions">
+    @if (store.isSubmitting()) {
+      <mat-progress-spinner diameter="20" mode="indeterminate" [attr.aria-label]="submittingLabel" />
+    }
+    <button mat-flat-button type="submit" [disabled]="isLocked()">{{ submitLabel }}</button>
+  </div>
+</form>

@@ -26,5 +26,24 @@ export const routes: Routes = [
     loadComponent: () =>
       import('./features/chatbot/chatbot-page').then((module) => module.ChatbotPage),
   },
+  {
+    path: AppPaths.register,
+    title: 'Cadastro — AchaLocal',
+    loadComponent: () =>
+      import('./features/register/register-page').then((module) => module.RegisterPage),
+  },
+  {
+    path: AppPaths.login,
+    title: 'Login — AchaLocal',
+    loadComponent: () =>
+      import('./features/login/login-page').then((module) => module.LoginPage),
+  },
+  {
+    // Placeholder até a feature de dashboard (que trará o guard).
+    path: AppPaths.dashboard,
+    title: 'Área do cliente — em breve',
+    data: { featureName: 'Área do cliente' },
+    loadComponent: loadComingSoonPage,
+  },
   ...DEV_ROUTES,
 ];

@@ -7,6 +7,8 @@ import { Plan } from './models/plan';
 
 export const LANDING_NAVIGATION_ITEMS: readonly NavigationItem[] = [
   { label: 'testar chatbot', icon: 'chat', path: AppPaths.chatbot },
+  { label: 'registrar', icon: 'person_add', path: AppPaths.register },
+  { label: 'login', icon: 'login', path: AppPaths.login },
 ];
 
 export const HOW_IT_WORKS_STEPS: readonly HowItWorksStep[] = [

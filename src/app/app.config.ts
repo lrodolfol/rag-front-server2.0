@@ -5,6 +5,7 @@ import { ApplicationConfig, LOCALE_ID, provideBrowserGlobalErrorListeners } from
 import { provideRouter, withComponentInputBinding, withInMemoryScrolling } from '@angular/router';
 import { environment } from '../environments/environment';
 import { routes } from './app.routes';
+import { AUTH_API_URL } from './core/config/auth-api-url.token';
 import { CHAT_API_URL } from './core/config/chat-api-url.token';
 import { provideAppIcons } from './core/icons/provide-app-icons';
 
@@ -22,5 +23,6 @@ export const appConfig: ApplicationConfig = {
     provideAppIcons(),
     { provide: LOCALE_ID, useValue: 'pt-BR' },
     { provide: CHAT_API_URL, useValue: environment.chatApiUrl },
+    { provide: AUTH_API_URL, useValue: environment.authApiUrl },
   ],
 };
