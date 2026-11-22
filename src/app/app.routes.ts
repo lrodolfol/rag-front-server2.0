@@ -22,9 +22,9 @@ export const routes: Routes = [
   },
   {
     path: AppPaths.chatbot,
-    title: 'Chatbot — em breve',
-    data: { featureName: 'Chatbot' },
-    loadComponent: loadComingSoonPage,
+    title: 'Chatbot — AchaLocal',
+    loadComponent: () =>
+      import('./features/chatbot/chatbot-page').then((module) => module.ChatbotPage),
   },
   ...DEV_ROUTES,
 ];

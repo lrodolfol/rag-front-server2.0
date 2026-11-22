@@ -1,0 +1,48 @@
+:host {
+  display: flex;
+  flex-direction: column;
+}
+
+.bubble {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  max-width: 80%;
+  padding: 10px 14px;
+  border-radius: 16px;
+  background: var(--app-color-chat-bubble);
+  color: var(--app-color-chat-text);
+  box-shadow: var(--mat-sys-level1);
+}
+
+.bubble--visitor {
+  align-self: flex-end;
+  border-bottom-right-radius: 4px;
+}
+
+.bubble--assistant {
+  align-self: flex-start;
+  border-bottom-left-radius: 4px;
+}
+
+.bubble--warning {
+  background: var(--app-color-warning-bg);
+  color: var(--app-color-warning-text);
+}
+
+.bubble--error {
+  background: var(--app-color-error-bg);
+  color: var(--app-color-error-text);
+}
+
+.bubble__text {
+  margin: 0;
+  white-space: pre-line;
+  overflow-wrap: anywhere;
+}
+
+.bubble__time {
+  align-self: flex-end;
+  font-size: 0.75rem;
+  opacity: 0.8;
+}

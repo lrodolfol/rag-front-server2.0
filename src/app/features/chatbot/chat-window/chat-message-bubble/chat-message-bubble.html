@@ -1,0 +1,6 @@
+<div class="bubble" [class]="modifierClasses()">
+  <p class="bubble__text">{{ message().text }}</p>
+  <time class="bubble__time" [attr.datetime]="message().sentAt.toISOString()">{{
+    message().sentAt | date: 'HH:mm'
+  }}</time>
+</div>

@@ -1,7 +1,13 @@
+import { NavigationItem } from '../../core/layout/navigation-item';
+import { AppPaths } from '../../core/routing/app-paths';
 import { Benefit } from './models/benefit';
 import { ChatMessage } from './models/chat-message';
 import { HowItWorksStep } from './models/how-it-works-step';
 import { Plan } from './models/plan';
+
+export const LANDING_NAVIGATION_ITEMS: readonly NavigationItem[] = [
+  { label: 'testar chatbot', icon: 'chat', path: AppPaths.chatbot },
+];
 
 export const HOW_IT_WORKS_STEPS: readonly HowItWorksStep[] = [
   {

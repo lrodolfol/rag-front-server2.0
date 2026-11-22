@@ -1,0 +1,17 @@
+<section class="window">
+  <app-chat-window-header />
+  <app-chat-message-list [messages]="store.messages()" [isWaiting]="store.isWaiting()" />
+  <div class="footer">
+    @if (!store.hasStarted()) {
+      <app-chat-suggestions
+        [disabled]="!store.canSend()"
+        (suggestionSelected)="store.send($event)"
+      />
+    }
+    <app-chat-composer
+      [disabled]="!store.canSend()"
+      [blockedHint]="blockedHint()"
+      (send)="store.send($event)"
+    />
+  </div>
+</section>

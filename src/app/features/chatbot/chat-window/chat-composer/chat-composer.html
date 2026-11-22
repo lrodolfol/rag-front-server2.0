@@ -1,0 +1,30 @@
+<div class="composer">
+  <mat-form-field class="field app-chat-input" appearance="outline" subscriptSizing="dynamic">
+    <mat-label>{{ inputLabel }}</mat-label>
+    <textarea
+      #messageInput
+      matInput
+      cdkTextareaAutosize
+      cdkAutosizeMinRows="1"
+      cdkAutosizeMaxRows="3"
+      [maxlength]="maxLength"
+      [formControl]="messageControl"
+      [aria-describedby]="blockedHint() ? blockedHintId : ''"
+      (keydown.enter)="onEnter($event)"
+    ></textarea>
+    <mat-hint align="end">{{ characterCount() }}/{{ maxLength }}</mat-hint>
+  </mat-form-field>
+  <button
+    mat-icon-button
+    type="button"
+    class="send"
+    [attr.aria-label]="sendLabel"
+    [disabled]="!canSubmit()"
+    (click)="submit()"
+  >
+    <mat-icon svgIcon="send" aria-hidden="true" />
+  </button>
+</div>
+@if (blockedHint(); as hint) {
+  <p class="blocked-hint" [id]="blockedHintId">{{ hint }}</p>
+}

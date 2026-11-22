@@ -1,0 +1,23 @@
+:host {
+  display: flex;
+}
+
+.welcome {
+  max-width: 80%;
+  padding: 10px 14px;
+  border-radius: 16px;
+  border-bottom-left-radius: 4px;
+  background: var(--app-color-chat-bubble);
+  color: var(--app-color-chat-text);
+  box-shadow: var(--mat-sys-level1);
+  overflow-wrap: anywhere;
+}
+
+.title {
+  margin: 0 0 4px;
+  font-weight: 700;
+}
+
+.text {
+  margin: 0;
+}

@@ -38,6 +38,27 @@ Com `npm start`, acesse [`/dev/tema`](http://localhost:4200/dev/tema) para ver t
 tematizados. A rota existe só em desenvolvimento: o build de produção substitui
 `src/app/dev/dev.routes.ts` por `dev.routes.prod.ts` (`fileReplacements` em `angular.json`).
 
+## Chatbot (`/chatbot`)
+
+A página do chat fica em `src/app/features/chatbot/` e conversa com o serviço de recomendação por
+`POST` com resposta em fluxo contínuo (`data: {"message": "..."}`).
+
+- **URL da API por ambiente**: `src/environments/environment.ts` (produção — placeholder `/chat`) e
+  `environment.development.ts` (UAT `http://127.0.0.1:8000/chat`, usado pelo `npm start` via
+  `fileReplacements` da configuração `development` em `angular.json`). O valor chega ao código pelo
+  `InjectionToken` `CHAT_API_URL` (`src/app/core/config/`), provido em `app.config.ts`; nos testes,
+  forneça um valor próprio.
+- **Apontar para o backend UAT**: suba o serviço em `http://127.0.0.1:8000` e rode `npm start`. Se o
+  navegador bloquear por CORS, crie `proxy.conf.json` (`/chat` → `http://127.0.0.1:8000`), ligue-o
+  em `serve.options.proxyConfig` e use `chatApiUrl: '/chat'` no ambiente de desenvolvimento.
+- **Contexto seguro**: o `user_code` usa `crypto.randomUUID()`, disponível só em HTTPS ou `localhost`.
+
+### Layout compartilhado
+
+`SiteHeader` fica em `src/app/core/layout/site-header/` e recebe os links por
+`navigationItems: readonly NavigationItem[]` (landing: "testar chatbot"; chatbot: "início" e
+"cadastrar").
+
 ### Verificações
 
 ```bash
