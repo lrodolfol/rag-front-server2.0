@@ -11,6 +11,8 @@ export const APP_ICON_NAMES = [
   'mail',
   'arrow_forward',
   'check',
+  'home',
+  'send',
 ] as const;
 
 export type AppIconName = (typeof APP_ICON_NAMES)[number];

@@ -6,10 +6,12 @@
         AchaLocal
       </a>
       <span class="spacer"></span>
-      <a mat-button [routerLink]="chatbotLink">
-        <mat-icon svgIcon="chat" aria-hidden="true" />
-        testar chatbot
-      </a>
+      @for (item of navigationItems(); track item.path) {
+        <a mat-button [routerLink]="toRouterLink(item.path)">
+          <mat-icon [svgIcon]="item.icon" aria-hidden="true" />
+          {{ item.label }}
+        </a>
+      }
     </div>
   </mat-toolbar>
   <mat-divider />

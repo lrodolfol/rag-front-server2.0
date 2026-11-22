@@ -1,10 +1,12 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { NavigationItem } from '../../core/layout/navigation-item';
+import { SiteHeader } from '../../core/layout/site-header/site-header';
 import { ClosingCallSection } from './closing-call-section/closing-call-section';
 import { HeroSection } from './hero-section/hero-section';
 import { HowItWorksSection } from './how-it-works-section/how-it-works-section';
+import { LANDING_NAVIGATION_ITEMS } from './landing-content';
 import { PricingSection } from './pricing-section/pricing-section';
 import { SiteFooter } from './site-footer/site-footer';
-import { SiteHeader } from './site-header/site-header';
 import { WhyBetterSection } from './why-better-section/why-better-section';
 
 @Component({
@@ -22,4 +24,6 @@ import { WhyBetterSection } from './why-better-section/why-better-section';
   styleUrl: './landing-page.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class LandingPage {}
+export class LandingPage {
+  protected readonly navigationItems: readonly NavigationItem[] = LANDING_NAVIGATION_ITEMS;
+}

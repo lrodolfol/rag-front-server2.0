@@ -19,6 +19,9 @@ const EXPECTED_TOKENS = [
   'info-text',
   'warning-bg',
   'warning-text',
+  'chat-window',
+  'chat-bubble',
+  'chat-text',
 ];
 
 // [texto/primeiro plano, fundo, razão mínima, observação]
@@ -33,6 +36,8 @@ const PAIRS = [
   ['success-text', 'success-bg', 4.5, 'status'],
   ['info-text', 'info-bg', 4.5, 'status'],
   ['warning-text', 'warning-bg', 4.5, 'status'],
+  ['chat-text', 'chat-bubble', 4.5, 'texto normal'],
+  ['chat-text', 'chat-window', 4.5, 'texto normal'],
 ];
 
 const FORBIDDEN_COLORS = [

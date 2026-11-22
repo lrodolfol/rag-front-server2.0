@@ -1,0 +1,29 @@
+:host {
+  display: block;
+}
+
+.composer {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+}
+
+.field {
+  flex: 1 1 auto;
+  min-width: 0;
+}
+
+.blocked-hint {
+  margin: 8px 0 0;
+  padding: 8px 12px;
+  border-radius: 8px;
+  background: var(--app-color-warning-bg);
+  color: var(--app-color-warning-text);
+  font-size: 0.875rem;
+}
+
+.send {
+  flex: none;
+  margin-top: 8px;
+  color: var(--app-color-primary);
+}

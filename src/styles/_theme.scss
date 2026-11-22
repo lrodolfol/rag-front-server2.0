@@ -102,6 +102,22 @@ html {
   );
 }
 
+// Campo de mensagem do chat: fundo branco, texto escuro e cantos arredondados. Fica no tema global
+// porque o form-field "outlined" não tem token de cor de fundo e ::ng-deep é proibido.
+.app-chat-input {
+  @include mat.form-field-overrides(
+    (
+      outlined-container-shape: 24px,
+      outlined-input-text-color: var(--app-color-chat-text),
+    )
+  );
+
+  .mat-mdc-text-field-wrapper {
+    border-radius: 24px;
+    background: var(--app-color-chat-bubble);
+  }
+}
+
 // Indicadores de foco fortes para navegação por teclado (FR-014).
 @include mat.strong-focus-indicators(
   (

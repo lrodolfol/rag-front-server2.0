@@ -1,0 +1,10 @@
+<div class="message-list" role="log" aria-live="polite" [attr.aria-label]="conversationLabel">
+  <app-chat-welcome />
+  @for (message of messages(); track message.id) {
+    <app-chat-message-bubble [message]="message" />
+  }
+  @if (isWaiting()) {
+    <app-chat-typing-indicator />
+  }
+  <div #end class="end"></div>
+</div>
