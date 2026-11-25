@@ -1,2 +1,6 @@
-// Placeholder de produção: o endpoint de produção do serviço de chat ainda não existe.
-export const environment = { chatApiUrl: '/chat' } as const;
+// Placeholders de produção: os endpoints de produção dos serviços de chat e de autenticação ainda não existem.
+export const environment = {
+  chatApiUrl: '/chat',
+  authApiUrl: '/api/v1/auth',
+  apiBaseUrl: '/api/v1',
+} as const;

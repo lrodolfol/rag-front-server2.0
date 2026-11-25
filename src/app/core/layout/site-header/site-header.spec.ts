@@ -1,4 +1,5 @@
 import { ViewportScroller } from '@angular/common';
+import { Component } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { MatIconTestingModule } from '@angular/material/icon/testing';
 import { provideRouter } from '@angular/router';
@@ -14,6 +15,18 @@ const CHATBOT_ITEMS: readonly NavigationItem[] = [
 const LANDING_ITEMS: readonly NavigationItem[] = [
   { label: 'testar chatbot', icon: 'chat', path: AppPaths.chatbot },
 ];
+
+@Component({
+  imports: [SiteHeader],
+  template: `
+    <app-site-header [navigationItems]="items">
+      <button class="projected" type="button">Sair</button>
+    </app-site-header>
+  `,
+})
+class ProjectionHost {
+  protected readonly items = LANDING_ITEMS;
+}
 
 describe('SiteHeader', () => {
   let fixture: ComponentFixture<SiteHeader>;
@@ -72,6 +85,21 @@ describe('SiteHeader', () => {
     expect(links.map((link) => link.getAttribute('href'))).toEqual(['/', '/cadastrar-negocio']);
     expect(links[0].querySelector('mat-icon[data-mat-icon-name="home"]')).not.toBeNull();
     expect(links[1].querySelector('mat-icon[data-mat-icon-name="add_business"]')).not.toBeNull();
+  });
+
+  it('should project extra content into the toolbar after the navigation items', async () => {
+    await render(LANDING_ITEMS);
+    const host = TestBed.createComponent(ProjectionHost);
+    await host.whenStable();
+    const toolbar = (host.nativeElement as HTMLElement).querySelector('mat-toolbar');
+    const projected = toolbar?.querySelector('button.projected');
+    expect(projected?.textContent?.trim()).toBe('Sair');
+    const children = Array.from(toolbar?.querySelector('.container')?.children ?? []);
+    const lastLink = children.filter((child) => child.matches('a[mat-button]')).at(-1);
+    expect(lastLink).toBeDefined();
+    expect(children.indexOf(projected as Element)).toBeGreaterThan(
+      children.indexOf(lastLink as Element),
+    );
   });
 
   it('should render the landing item linking to the chatbot page', async () => {

@@ -1,0 +1,49 @@
+<app-site-header [navigationItems]="navigationItems">
+  <button mat-button type="button" (click)="signOut()">
+    <mat-icon svgIcon="logout" aria-hidden="true" />
+    {{ signOutLabel }}
+  </button>
+</app-site-header>
+<main class="dashboard">
+  <div class="container">
+    <div class="section-header">
+      <div class="titles">
+        <h1>{{ heading }}</h1>
+        <p class="subtitle">{{ subheading }}</p>
+      </div>
+      @if (showNewBusinessAction()) {
+        <a mat-flat-button class="new-business" [routerLink]="registerBusinessLink">
+          <mat-icon svgIcon="add" aria-hidden="true" />
+          {{ newBusinessLabel }}
+        </a>
+      }
+    </div>
+
+    <section class="content">
+      @switch (store.status()) {
+        @case ('loading') {
+          <div class="loading" role="status">
+            <mat-progress-spinner mode="indeterminate" diameter="40" aria-hidden="true" />
+            <span class="visually-hidden">{{ loadingText }}</span>
+          </div>
+        }
+        @case ('loaded') {
+          @if (store.business(); as business) {
+            <app-business-card [business]="business" />
+          }
+        }
+        @case ('empty') {
+          <app-business-empty-state />
+        }
+        @case ('failed') {
+          <div class="failure" role="alert">
+            <p>{{ loadErrorText }}</p>
+            <button mat-stroked-button type="button" (click)="retry()">{{ retryLabel }}</button>
+          </div>
+        }
+      }
+    </section>
+
+    <app-chatbot-preview-card />
+  </div>
+</main>
