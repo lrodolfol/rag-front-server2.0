@@ -1,0 +1,17 @@
+<mat-card appearance="outlined" class="card">
+  <div class="media">
+    <mat-icon svgIcon="image" aria-hidden="true" />
+  </div>
+  <div class="body">
+    <h2 class="name" [title]="business().name">{{ business().name }}</h2>
+    <div class="actions">
+      <a mat-stroked-button [routerLink]="editLink">
+        <mat-icon svgIcon="edit" aria-hidden="true" />
+        {{ editLabel }}
+      </a>
+      <a mat-icon-button class="delete" [routerLink]="deleteLink" [attr.aria-label]="deleteAriaLabel">
+        <mat-icon svgIcon="delete" aria-hidden="true" />
+      </a>
+    </div>
+  </div>
+</mat-card>

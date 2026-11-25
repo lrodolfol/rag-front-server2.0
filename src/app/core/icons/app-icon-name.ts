@@ -17,6 +17,12 @@ export const APP_ICON_NAMES = [
   'visibility',
   'visibility_off',
   'login',
+  'add',
+  'edit',
+  'delete',
+  'image',
+  'logout',
+  'grid_view',
 ] as const;
 
 export type AppIconName = (typeof APP_ICON_NAMES)[number];

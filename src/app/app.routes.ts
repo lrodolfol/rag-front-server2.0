@@ -1,4 +1,5 @@
 import { Routes } from '@angular/router';
+import { authGuard } from './core/auth/auth.guard';
 import { AppPaths } from './core/routing/app-paths';
 import { DEV_ROUTES } from './dev/dev.routes';
 import { LandingPage } from './features/landing/landing-page';
@@ -39,10 +40,24 @@ export const routes: Routes = [
       import('./features/login/login-page').then((module) => module.LoginPage),
   },
   {
-    // Placeholder até a feature de dashboard (que trará o guard).
     path: AppPaths.dashboard,
-    title: 'Área do cliente — em breve',
-    data: { featureName: 'Área do cliente' },
+    title: 'Meus negócios — AchaLocal',
+    canActivate: [authGuard],
+    loadComponent: () =>
+      import('./features/dashboard/dashboard-page').then((module) => module.DashboardPage),
+  },
+  {
+    path: AppPaths.editBusiness,
+    title: 'Edição de negócio — em breve',
+    data: { featureName: 'Edição de negócio' },
+    canActivate: [authGuard],
+    loadComponent: loadComingSoonPage,
+  },
+  {
+    path: AppPaths.deleteBusiness,
+    title: 'Exclusão de negócio — em breve',
+    data: { featureName: 'Exclusão de negócio' },
+    canActivate: [authGuard],
     loadComponent: loadComingSoonPage,
   },
   ...DEV_ROUTES,

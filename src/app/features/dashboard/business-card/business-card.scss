@@ -1,0 +1,51 @@
+:host {
+  display: block;
+  width: 100%;
+  max-width: 600px;
+}
+
+.card {
+  overflow: hidden;
+}
+
+.media {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 160px;
+  background: var(--app-color-accent);
+
+  mat-icon {
+    width: 48px;
+    height: 48px;
+    color: var(--app-color-primary);
+  }
+}
+
+.body {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  padding: 16px;
+}
+
+// Nome em uma linha com reticências: nunca gera rolagem horizontal.
+.name {
+  min-width: 0;
+  margin: 0;
+  overflow: hidden;
+  font-size: 1.25rem;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.actions {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+}
+
+.delete {
+  color: var(--app-color-error-text);
+}

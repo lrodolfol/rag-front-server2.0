@@ -1,0 +1,11 @@
+<mat-card appearance="outlined" class="card">
+  <span class="icon-box">
+    <mat-icon svgIcon="storefront" aria-hidden="true" />
+  </span>
+  <h2>{{ heading }}</h2>
+  <p>{{ text }}</p>
+  <a mat-flat-button [routerLink]="registerBusinessLink">
+    <mat-icon svgIcon="add" aria-hidden="true" />
+    {{ registerNowLabel }}
+  </a>
+</mat-card>
