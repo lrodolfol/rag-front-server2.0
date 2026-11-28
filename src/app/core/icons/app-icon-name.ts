@@ -23,6 +23,8 @@ export const APP_ICON_NAMES = [
   'image',
   'logout',
   'grid_view',
+  'arrow_back',
+  'save',
 ] as const;
 
 export type AppIconName = (typeof APP_ICON_NAMES)[number];

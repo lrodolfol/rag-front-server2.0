@@ -2,6 +2,7 @@ import { Routes } from '@angular/router';
 import { authGuard } from './core/auth/auth.guard';
 import { AppPaths } from './core/routing/app-paths';
 import { DEV_ROUTES } from './dev/dev.routes';
+import { BUSINESS_REGISTRATION_PAGE_TITLE } from './features/business-registration/business-registration-content';
 import { LandingPage } from './features/landing/landing-page';
 
 const loadComingSoonPage = () =>
@@ -16,10 +17,10 @@ export const routes: Routes = [
     component: LandingPage,
   },
   {
+    // Links públicos (landing, chatbot) continuam válidos e passam pelo `authGuard` do destino.
     path: AppPaths.registerBusiness,
-    title: 'Cadastro de negócio — em breve',
-    data: { featureName: 'Cadastro de negócio' },
-    loadComponent: loadComingSoonPage,
+    pathMatch: 'full',
+    redirectTo: AppPaths.newBusiness,
   },
   {
     path: AppPaths.chatbot,
@@ -45,6 +46,16 @@ export const routes: Routes = [
     canActivate: [authGuard],
     loadComponent: () =>
       import('./features/dashboard/dashboard-page').then((module) => module.DashboardPage),
+  },
+  {
+    // Rota irmã de `dashboard` (não filha): a página do dashboard não vira layout (research R-04).
+    path: AppPaths.newBusiness,
+    title: BUSINESS_REGISTRATION_PAGE_TITLE,
+    canActivate: [authGuard],
+    loadComponent: () =>
+      import('./features/business-registration/business-registration-page').then(
+        (module) => module.BusinessRegistrationPage,
+      ),
   },
   {
     path: AppPaths.editBusiness,

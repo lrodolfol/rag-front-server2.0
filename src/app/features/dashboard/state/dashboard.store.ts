@@ -4,14 +4,14 @@ import { catchError, finalize, map, of, timeout } from 'rxjs';
 import { AuthRedirectService } from '../../../core/auth/auth-redirect.service';
 import { AuthSessionService } from '../../../core/auth/auth-session.service';
 import { DASHBOARD_TIMEOUT_MS } from '../dashboard-content';
-import { Business } from '../models/business';
-import { BusinessLoadResult } from '../models/business-load-result';
+import { Business } from '../../../core/business/business';
+import { BusinessLoadResult } from '../../../core/business/business-load-result';
 import { DashboardStatus } from '../models/dashboard-status';
-import { BusinessApiService } from '../services/business-api.service';
+import { BusinessApiService } from '../../../core/business/business-api.service';
 import {
   errorToBusinessLoadResult,
   toBusinessLoadResult,
-} from '../services/business-response.mapper';
+} from '../../../core/business/business-response.mapper';
 
 const STATUS_BY_RESULT: Readonly<Record<BusinessLoadResult['kind'], DashboardStatus>> = {
   found: 'loaded',
@@ -55,7 +55,9 @@ export class DashboardStore {
       .pipe(
         map(toBusinessLoadResult),
         timeout(DASHBOARD_TIMEOUT_MS),
-        catchError((error: unknown) => of(errorToBusinessLoadResult(error))),
+        catchError((error: unknown) => {
+          return of(errorToBusinessLoadResult(error));
+        }),
         // O interceptor pode completar sem emitir (401): libera novas tentativas mesmo assim.
         finalize(() => (this.requestInFlight = false)),
         takeUntilDestroyed(this.destroyRef),

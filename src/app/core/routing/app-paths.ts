@@ -5,6 +5,7 @@ export const AppPaths = {
   register: 'register',
   login: 'login',
   dashboard: 'dashboard',
+  newBusiness: 'dashboard/new',
   editBusiness: 'editar-negocio',
   deleteBusiness: 'excluir-negocio',
 } as const;

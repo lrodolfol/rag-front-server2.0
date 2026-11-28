@@ -5,7 +5,7 @@ import { MatIcon } from '@angular/material/icon';
 import { RouterLink } from '@angular/router';
 import { AppPaths, toRouterLink } from '../../../core/routing/app-paths';
 import { DELETE_ARIA_LABEL, EDIT_LABEL } from '../dashboard-content';
-import { Business } from '../models/business';
+import { Business } from '../../../core/business/business';
 
 @Component({
   selector: 'app-business-card',

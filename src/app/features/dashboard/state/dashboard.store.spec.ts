@@ -20,9 +20,10 @@ const FOUND_BODY = {
   statusCode: 200,
   success: true,
   message: 'Negócio encontrado com sucesso.',
-  data: { name: 'Padaria Pão Quente' },
+  data: { client: { id: 42 }, business: { name: 'Padaria Pão Quente' } },
   error: null,
 };
+const NO_BUSINESS_BODY = { ...FOUND_BODY, data: { client: { id: 42 }, business: null } };
 
 describe('DashboardStore', () => {
   let httpTesting: HttpTestingController;
@@ -91,7 +92,7 @@ describe('DashboardStore', () => {
   });
 
   it('should go to empty on 200 with data null', () => {
-    loadAndFlush({ ...FOUND_BODY, data: null });
+    loadAndFlush(NO_BUSINESS_BODY);
     expect(store.status()).toBe('empty');
     expect(store.business()).toBeNull();
   });
@@ -108,7 +109,7 @@ describe('DashboardStore', () => {
   });
 
   it('should go to failed on invalid data', () => {
-    loadAndFlush({ ...FOUND_BODY, data: { name: '   ' } });
+    loadAndFlush({ ...FOUND_BODY, data: { client: { id: 42 }, business: { name: '   ' } } });
     expect(store.status()).toBe('failed');
   });
 
