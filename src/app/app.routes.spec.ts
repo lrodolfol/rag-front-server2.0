@@ -26,6 +26,7 @@ describe('app routes', () => {
     await import('./features/register/register-page');
     await import('./features/login/login-page');
     await import('./features/dashboard/dashboard-page');
+    await import('./features/business-registration/business-registration-page');
   }, 30000);
 
   beforeEach(async () => {
@@ -171,10 +172,58 @@ describe('app routes', () => {
     expect(TestBed.inject(Title).getTitle()).toBe('AchaLocal — diretório local com IA');
   });
 
-  it('should render the coming soon page for business registration', async () => {
-    await harness.navigateByUrl('/cadastrar-negocio');
-    expect(routeHeading()).toBe('Cadastro de negócio — em breve');
-    expect(TestBed.inject(Title).getTitle()).toBe('Cadastro de negócio — em breve');
+  describe('business registration (/dashboard/new)', () => {
+    const deniedSessions: readonly [string, string | null][] = [
+      ['without a session', null],
+      [
+        'with an expired session',
+        JSON.stringify({
+          accessToken: 't',
+          tokenType: 'Bearer',
+          expiresAt: '2000-01-01T00:00:00Z',
+          clientId: 42,
+        }),
+      ],
+      ['with a malformed session', '{não é json'],
+    ];
+
+    for (const [label, stored] of deniedSessions) {
+      it(`should send /dashboard/new to /login ${label}`, async () => {
+        if (stored !== null) {
+          sessionStorage.setItem(AUTH_SESSION_STORAGE_KEY, stored);
+        }
+        await harness.navigateByUrl('/dashboard/new');
+        expect(currentUrl()).toBe('/login');
+        expect(routeTag()).toBe('app-login-page');
+        expect(
+          (harness.fixture.nativeElement as HTMLElement).querySelector(
+            'app-business-registration-page',
+          ),
+        ).toBeNull();
+        expect(sessionStorage.getItem(AUTH_SESSION_STORAGE_KEY)).toBeNull();
+      });
+    }
+
+    it('should open the registration page with a valid session and set the title', async () => {
+      saveValidSession();
+      await harness.navigateByUrl('/dashboard/new');
+      expect(routeTag()).toBe('app-business-registration-page');
+      expect(routeHeading()).toBe('Novo negócio');
+      expect(TestBed.inject(Title).getTitle()).toBe('Novo negócio — AchaLocal');
+    });
+
+    it('should redirect /cadastrar-negocio to /dashboard/new', async () => {
+      saveValidSession();
+      await harness.navigateByUrl('/cadastrar-negocio');
+      expect(currentUrl()).toBe('/dashboard/new');
+      expect(routeTag()).toBe('app-business-registration-page');
+    });
+
+    it('should send /cadastrar-negocio to /login without a session', async () => {
+      await harness.navigateByUrl('/cadastrar-negocio');
+      expect(currentUrl()).toBe('/login');
+      expect(routeTag()).toBe('app-login-page');
+    });
   });
 
   it('should render the chatbot page at /chatbot (FR-001)', async () => {

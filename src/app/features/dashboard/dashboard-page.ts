@@ -52,7 +52,7 @@ export class DashboardPage {
   protected readonly loadErrorText = LOAD_ERROR_TEXT;
   protected readonly retryLabel = RETRY_LABEL;
   protected readonly signOutLabel = SIGN_OUT_LABEL;
-  protected readonly registerBusinessLink = toRouterLink(AppPaths.registerBusiness);
+  protected readonly newBusinessLink = toRouterLink(AppPaths.newBusiness);
 
   /** "Novo negócio" só para quem ainda não tem negócio (1 negócio por cliente). */
   protected readonly showNewBusinessAction = computed(() => this.store.status() === 'empty');

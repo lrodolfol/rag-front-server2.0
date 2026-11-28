@@ -1,10 +1,23 @@
 import { HttpErrorResponse } from '@angular/common/http';
 import { TimeoutError } from 'rxjs';
-import { ApiResponseDto } from '../../../core/api/api-response.dto';
-import { BusinessResponseDataDto } from '../models/business-response-data.dto';
+import { ApiResponseDto } from '../api/api-response.dto';
+import {
+  BusinessOwnerClientDto,
+  BusinessResponseDataDto,
+  ClientBusinessResponseDataDto,
+} from './business-response-data.dto';
 import { errorToBusinessLoadResult, toBusinessLoadResult } from './business-response.mapper';
 
-const DATA: BusinessResponseDataDto = {
+const CLIENT: BusinessOwnerClientDto = {
+  id: 42,
+  name: 'Maria Souza',
+  email: 'maria@exemplo.com.br',
+  emailConfirmed: true,
+  createdAt: '2026-10-01T10:00:00+00:00',
+  updatedAt: '2026-10-02T10:00:00+00:00',
+};
+
+const BUSINESS: BusinessResponseDataDto = {
   name: '  Padaria Pão Quente  ',
   description: 'Padaria artesanal.',
   email: 'contato@paoquente.com.br',
@@ -15,16 +28,22 @@ const DATA: BusinessResponseDataDto = {
   updatedAt: '2026-11-20T09:15:44+00:00',
 };
 
-function envelope(overrides: Record<string, unknown>): ApiResponseDto<BusinessResponseDataDto> {
+function withBusiness(business: unknown): Record<string, unknown> {
+  return { data: { client: CLIENT, business } };
+}
+
+function envelope(
+  overrides: Record<string, unknown>,
+): ApiResponseDto<ClientBusinessResponseDataDto> {
   // O servidor pode mandar qualquer coisa: o cast simula respostas fora do contrato.
   return {
     statusCode: 200,
     success: true,
     message: 'Negócio encontrado com sucesso.',
-    data: DATA,
+    data: { client: CLIENT, business: BUSINESS },
     error: null,
     ...overrides,
-  } as unknown as ApiResponseDto<BusinessResponseDataDto>;
+  } as unknown as ApiResponseDto<ClientBusinessResponseDataDto>;
 }
 
 function httpError(status: number): HttpErrorResponse {
@@ -39,18 +58,26 @@ describe('toBusinessLoadResult', () => {
     });
   });
 
-  it('should return not-found when data is null', () => {
-    expect(toBusinessLoadResult(envelope({ data: null }))).toEqual({ kind: 'not-found' });
+  it('should return not-found when business is null', () => {
+    const response = envelope({
+      message: 'Nenhum negócio cadastrado. Cadastre o seu negócio para vê-lo no painel.',
+      ...withBusiness(null),
+    });
+    expect(toBusinessLoadResult(response)).toEqual({ kind: 'not-found' });
   });
 
   const invalidCases: readonly [string, Record<string, unknown>][] = [
     ['success: false', { success: false }],
+    ['data null', { data: null }],
     ['data as string', { data: 'Padaria' }],
-    ['data as array', { data: [DATA] }],
-    ['data without name', { data: { ...DATA, name: undefined } }],
-    ['empty name', { data: { ...DATA, name: '' } }],
-    ['blank name', { data: { ...DATA, name: '   ' } }],
-    ['non-string name', { data: { ...DATA, name: 123 } }],
+    ['data as array', { data: [BUSINESS] }],
+    ['data without business', { data: { client: CLIENT } }],
+    ['business at the root of data (old contract)', { data: BUSINESS }],
+    ['business as string', withBusiness('Padaria')],
+    ['business without name', withBusiness({ ...BUSINESS, name: undefined })],
+    ['empty name', withBusiness({ ...BUSINESS, name: '' })],
+    ['blank name', withBusiness({ ...BUSINESS, name: '   ' })],
+    ['non-string name', withBusiness({ ...BUSINESS, name: 123 })],
   ];
   for (const [label, overrides] of invalidCases) {
     it(`should return invalid for ${label}`, () => {
@@ -59,7 +86,7 @@ describe('toBusinessLoadResult', () => {
   }
 
   it('should return invalid for a body that is not an envelope', () => {
-    const body = null as unknown as ApiResponseDto<BusinessResponseDataDto>;
+    const body = null as unknown as ApiResponseDto<ClientBusinessResponseDataDto>;
     expect(toBusinessLoadResult(body)).toEqual({ kind: 'invalid' });
   });
 });

@@ -28,10 +28,10 @@ describe('BusinessEmptyState', () => {
     );
   });
 
-  it('should link "Cadastrar agora" to /cadastrar-negocio with the add icon', () => {
+  it('should link "Cadastrar agora" to /dashboard/new with the add icon', () => {
     const link = element.querySelector<HTMLAnchorElement>('a');
     expect(link?.textContent?.trim()).toBe('Cadastrar agora');
-    expect(link?.getAttribute('href')).toBe('/cadastrar-negocio');
+    expect(link?.getAttribute('href')).toBe('/dashboard/new');
     expect(link?.querySelector('mat-icon[data-mat-icon-name="add"]')).not.toBeNull();
   });
 });

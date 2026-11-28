@@ -1,0 +1,43 @@
+<app-site-header [navigationItems]="navigationItems">
+  <button mat-button type="button" (click)="signOut()">
+    <mat-icon svgIcon="logout" aria-hidden="true" />
+    {{ signOutLabel }}
+  </button>
+</app-site-header>
+<main class="registration">
+  <div class="container">
+    @if (store.showForm()) {
+      <app-business-registration-form
+        [submitting]="store.isSubmitting()"
+        [failureMessage]="store.failureMessage()"
+        (submitted)="store.submit($event)"
+        (back)="goToDashboard()"
+      >
+        <ng-container *ngTemplateOutlet="titles" />
+      </app-business-registration-form>
+    } @else {
+      <ng-container *ngTemplateOutlet="titles" />
+      @switch (store.status()) {
+        @case ('checking') {
+          <div class="checking" role="status">
+            <mat-progress-spinner mode="indeterminate" diameter="40" aria-hidden="true" />
+            <span class="visually-hidden">{{ checkingText }}</span>
+          </div>
+        }
+        @case ('check-failed') {
+          <div class="failure" role="alert">
+            <p>{{ checkErrorText }}</p>
+            <button mat-stroked-button type="button" (click)="retry()">{{ retryLabel }}</button>
+          </div>
+        }
+      }
+    }
+  </div>
+</main>
+
+<ng-template #titles>
+  <div class="titles">
+    <h1>{{ heading }}</h1>
+    <p class="subtitle">{{ subheading }}</p>
+  </div>
+</ng-template>

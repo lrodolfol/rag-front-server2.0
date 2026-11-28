@@ -17,5 +17,5 @@ export class BusinessEmptyState {
   protected readonly heading = EMPTY_HEADING;
   protected readonly text = EMPTY_TEXT;
   protected readonly registerNowLabel = REGISTER_NOW_LABEL;
-  protected readonly registerBusinessLink = toRouterLink(AppPaths.registerBusiness);
+  protected readonly newBusinessLink = toRouterLink(AppPaths.newBusiness);
 }

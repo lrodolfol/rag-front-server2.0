@@ -1,8 +1,8 @@
 import { HttpErrorResponse } from '@angular/common/http';
-import { isRecord, readableMessage } from '../../../core/api/api-response-body';
-import { ApiResponseDto } from '../../../core/api/api-response.dto';
-import { BusinessLoadResult } from '../models/business-load-result';
-import { BusinessResponseDataDto } from '../models/business-response-data.dto';
+import { isRecord, readableMessage } from '../api/api-response-body';
+import { ApiResponseDto } from '../api/api-response.dto';
+import { BusinessLoadResult } from './business-load-result';
+import { ClientBusinessResponseDataDto } from './business-response-data.dto';
 
 const NOT_FOUND: BusinessLoadResult = { kind: 'not-found' };
 const INVALID: BusinessLoadResult = { kind: 'invalid' };
@@ -10,20 +10,24 @@ const INVALID: BusinessLoadResult = { kind: 'invalid' };
 /**
  * Converte a resposta de sucesso em `BusinessLoadResult` (contracts/business-api.md, "Mapeamento").
  * A tipagem descreve o contrato, mas o servidor pode mandar qualquer coisa: a validação é defensiva.
+ * O negócio vem em `data.business`; `business: null` significa cliente sem negócio cadastrado.
  */
 export function toBusinessLoadResult(
-  response: ApiResponseDto<BusinessResponseDataDto>,
+  response: ApiResponseDto<ClientBusinessResponseDataDto>,
 ): BusinessLoadResult {
   const body: unknown = response;
   if (!isRecord(body) || body['success'] === false) {
     return INVALID;
   }
   const data = body['data'];
-  // PENDENTE (R-04): o backend ainda não confirmou se "sem negócio" é 404 ou 200 + `data: null`.
-  if (data === null) {
+  if (!isRecord(data)) {
+    return INVALID;
+  }
+  const business = data['business'];
+  if (business === null) {
     return NOT_FOUND;
   }
-  const name = isRecord(data) ? readableMessage(data['name']) : null;
+  const name = isRecord(business) ? readableMessage(business['name']) : null;
   return name === null ? INVALID : { kind: 'found', business: { name } };
 }
 

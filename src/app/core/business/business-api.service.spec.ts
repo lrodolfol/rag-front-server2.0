@@ -1,10 +1,11 @@
 import { HttpErrorResponse, provideHttpClient } from '@angular/common/http';
 import { HttpTestingController, provideHttpClientTesting } from '@angular/common/http/testing';
 import { TestBed } from '@angular/core/testing';
-import { ApiResponseDto } from '../../../core/api/api-response.dto';
-import { API_BASE_URL } from '../../../core/config/api-base-url.token';
-import { BusinessResponseDataDto } from '../models/business-response-data.dto';
+import { ApiResponseDto } from '../api/api-response.dto';
+import { API_BASE_URL } from '../config/api-base-url.token';
+import { BusinessResponseDataDto } from './business-response-data.dto';
 import { BusinessApiService } from './business-api.service';
+import { RegisterBusinessRequestDto } from '../../features/business-registration/models/register-business-request.dto';
 
 const BASE_URL = 'http://api.test/api/v1';
 const BUSINESS_URL = `${BASE_URL}/42/business`;
@@ -57,6 +58,43 @@ describe('BusinessApiService', () => {
     request.flush(RESPONSE);
 
     expect(received).toEqual(RESPONSE);
+  });
+
+  describe('registerBusiness', () => {
+    const REQUEST: RegisterBusinessRequestDto = {
+      name: 'pet_amigo',
+      descricao: 'pet shop e cuidados para animais',
+      email: null,
+      address: 'avenida das acacias - 310',
+      telephone: '35995678901',
+      detalhes: 'O Pet Amigo oferece banho e tosa, produtos para cães e gatos.',
+    };
+
+    it('should POST the DTO to {base}/{clientId}/business without Authorization', () => {
+      let received: unknown;
+      service.registerBusiness(42, REQUEST).subscribe((response) => (received = response));
+
+      const request = httpTesting.expectOne(BUSINESS_URL);
+      expect(request.request.method).toBe('POST');
+      expect(request.request.urlWithParams).toBe(BUSINESS_URL);
+      expect(request.request.body).toEqual(REQUEST);
+      expect(request.request.headers.has('Authorization')).toBe(false);
+      request.flush({ ...RESPONSE, statusCode: 201 }, { status: 201, statusText: 'Created' });
+
+      expect(received).toEqual({ ...RESPONSE, statusCode: 201 });
+    });
+
+    it('should propagate HTTP errors untouched', () => {
+      let error: unknown;
+      service
+        .registerBusiness(42, REQUEST)
+        .subscribe({ error: (caught: unknown) => (error = caught) });
+
+      httpTesting.expectOne(BUSINESS_URL).flush(null, { status: 409, statusText: 'Conflict' });
+
+      expect(error).toBeInstanceOf(HttpErrorResponse);
+      expect((error as HttpErrorResponse).status).toBe(409);
+    });
   });
 
   it('should propagate HTTP errors untouched', () => {

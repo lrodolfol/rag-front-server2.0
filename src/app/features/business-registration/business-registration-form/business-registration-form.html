@@ -1,0 +1,124 @@
+<form class="form" novalidate [formGroup]="form" (ngSubmit)="submit()">
+  <div class="content">
+    <button mat-button type="button" class="back" [disabled]="submitting()" (click)="goBack()">
+      <mat-icon svgIcon="arrow_back" aria-hidden="true" />
+      {{ text.BACK_LABEL }}
+    </button>
+
+    <!-- Título e subtítulo da página (h1), projetados logo abaixo do "Voltar" como no esboço. -->
+    <ng-content />
+
+    <mat-card appearance="outlined" class="card">
+      <h2>{{ text.BASIC_INFO_SECTION }}</h2>
+      <mat-form-field appearance="outline">
+        <mat-label>{{ text.NAME_LABEL }}</mat-label>
+        <input
+          matInput
+          type="text"
+          formControlName="name"
+          autocomplete="organization"
+          required
+          [maxlength]="text.NAME_MAX_LENGTH"
+          [placeholder]="text.NAME_PLACEHOLDER"
+        />
+        <mat-error>{{ errorMessage('name') }}</mat-error>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline">
+        <mat-label>{{ text.DESCRIPTION_LABEL }}</mat-label>
+        <input
+          matInput
+          type="text"
+          formControlName="description"
+          autocomplete="off"
+          [maxlength]="text.DESCRIPTION_MAX_LENGTH"
+          [placeholder]="text.DESCRIPTION_PLACEHOLDER"
+        />
+        <mat-hint align="end">{{ characterCount('description', text.DESCRIPTION_MAX_LENGTH) }}</mat-hint>
+        <mat-error>{{ errorMessage('description') }}</mat-error>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline">
+        <mat-label>{{ text.DETAILS_LABEL }}</mat-label>
+        <textarea
+          matInput
+          formControlName="details"
+          cdkTextareaAutosize
+          cdkAutosizeMinRows="4"
+          required
+          [maxlength]="text.DETAILS_MAX_LENGTH"
+          [placeholder]="text.DETAILS_PLACEHOLDER"
+        ></textarea>
+        <mat-hint>{{ text.DETAILS_HINT }}</mat-hint>
+        <mat-hint align="end">{{ characterCount('details', text.DETAILS_MAX_LENGTH) }}</mat-hint>
+        <mat-error>{{ errorMessage('details') }}</mat-error>
+      </mat-form-field>
+    </mat-card>
+
+    <mat-card appearance="outlined" class="card">
+      <h2>{{ text.ADDRESS_SECTION }}</h2>
+      <mat-form-field appearance="outline">
+        <mat-label>{{ text.ADDRESS_LABEL }}</mat-label>
+        <input
+          matInput
+          type="text"
+          formControlName="address"
+          autocomplete="street-address"
+          required
+          [maxlength]="text.ADDRESS_MAX_LENGTH"
+        />
+        <mat-error>{{ errorMessage('address') }}</mat-error>
+      </mat-form-field>
+    </mat-card>
+
+    <mat-card appearance="outlined" class="card">
+      <h2>{{ text.CONTACT_SECTION }}</h2>
+      <div class="contact">
+        <mat-form-field appearance="outline">
+          <mat-label>{{ text.EMAIL_LABEL }}</mat-label>
+          <input
+            matInput
+            type="email"
+            formControlName="email"
+            autocomplete="email"
+            [maxlength]="text.EMAIL_MAX_LENGTH"
+            [placeholder]="text.EMAIL_PLACEHOLDER"
+          />
+          <mat-error>{{ errorMessage('email') }}</mat-error>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+          <mat-label>{{ text.TELEPHONE_LABEL }}</mat-label>
+          <input
+            matInput
+            type="tel"
+            inputmode="numeric"
+            formControlName="telephone"
+            autocomplete="tel-national"
+            [placeholder]="text.TELEPHONE_PLACEHOLDER"
+            (input)="formatTelephone($event)"
+          />
+          <mat-error>{{ errorMessage('telephone') }}</mat-error>
+        </mat-form-field>
+      </div>
+    </mat-card>
+
+    @if (failureMessage(); as message) {
+      <p class="failure" role="alert">{{ message }}</p>
+    }
+  </div>
+
+  <div class="actions">
+    @if (submitting()) {
+      <mat-progress-spinner
+        diameter="20"
+        mode="indeterminate"
+        [attr.aria-label]="text.SUBMITTING_LABEL"
+      />
+    }
+    <button mat-flat-button type="submit" class="submit" [disabled]="submitting()">
+      <mat-icon svgIcon="save" aria-hidden="true" />
+      {{ text.SUBMIT_LABEL }}
+    </button>
+  </div>
+</form>

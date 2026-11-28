@@ -32,9 +32,10 @@ const FOUND_BODY = {
   statusCode: 200,
   success: true,
   message: 'Negócio encontrado com sucesso.',
-  data: { name: 'Padaria Pão Quente' },
+  data: { client: { id: 42 }, business: { name: 'Padaria Pão Quente' } },
   error: null,
 };
+const NO_BUSINESS_BODY = { ...FOUND_BODY, data: { client: { id: 42 }, business: null } };
 const LOAD_ERROR = 'Não foi possível carregar seus dados agora. Tente novamente em instantes.';
 const SERVICE_MESSAGE = 'Mensagem técnica do serviço';
 
@@ -56,7 +57,7 @@ describe('DashboardPage', () => {
           { path: '', component: Stub },
           { path: 'login', component: Stub },
           { path: 'chatbot', component: Stub },
-          { path: 'cadastrar-negocio', component: Stub },
+          { path: 'dashboard/new', component: Stub },
           { path: 'dashboard', component: DashboardPage },
         ]),
         provideHttpClient(withInterceptors([authTokenInterceptor])),
@@ -185,7 +186,7 @@ describe('DashboardPage', () => {
   describe('US3 — no business yet', () => {
     const emptyAnswers: readonly [string, object, number][] = [
       ['HTTP 404', { success: false, data: null }, 404],
-      ['200 with data null', { ...FOUND_BODY, data: null }, 200],
+      ['200 with business null', NO_BUSINESS_BODY, 200],
     ];
     for (const [label, body, status] of emptyAnswers) {
       it(`should show the empty state and "Novo negócio" on ${label}`, async () => {
@@ -200,9 +201,9 @@ describe('DashboardPage', () => {
           'Cadastre seu primeiro negócio para aparecer no chatbot.',
         );
         expect(findByText('a', 'Cadastrar agora')?.getAttribute('href')).toBe(
-          '/cadastrar-negocio',
+          '/dashboard/new',
         );
-        expect(newBusinessButton()?.getAttribute('href')).toBe('/cadastrar-negocio');
+        expect(newBusinessButton()?.getAttribute('href')).toBe('/dashboard/new');
       });
     }
 
@@ -320,7 +321,7 @@ describe('DashboardPage', () => {
 
       retryButton()?.click();
       await settle();
-      await respond(httpTesting.expectOne(BUSINESS_URL), { ...FOUND_BODY, data: null });
+      await respond(httpTesting.expectOne(BUSINESS_URL), NO_BUSINESS_BODY);
       expectChatbotCard();
     });
 

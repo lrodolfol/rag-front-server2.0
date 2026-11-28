@@ -40,7 +40,7 @@ import {
 import { toFieldErrorMessage } from '../services/registration-field-message';
 import { toRegistrationInput } from '../services/registration-input.mapper';
 import { RegistrationStore } from '../state/registration.store';
-import { notBlankValidator } from '../validators/not-blank.validator';
+import { notBlankValidator } from '../../../core/forms/not-blank.validator';
 import { passwordStrengthValidator } from '../validators/password-strength.validator';
 import { trimmedEmailValidator } from '../../../core/forms/trimmed-email.validator';
 
